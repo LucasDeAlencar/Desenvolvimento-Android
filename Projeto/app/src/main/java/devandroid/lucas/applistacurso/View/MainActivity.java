@@ -2,6 +2,7 @@ package devandroid.lucas.applistacurso.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,9 @@ import devandroid.lucas.applistacurso.R;
 import devandroid.lucas.applistacurso.controller.PessoaController;
 
 public class MainActivity extends AppCompatActivity {
+
+    SharedPreferences sharedPreferences;/*Salvara um determinado na forma de pares de valores-chave semelhantes a um Mapa*/
+    public static final String NOME_PREFERENCES = "pref_listavip";
 
     PessoaController controller;
 
@@ -38,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sharedPreferences = getSharedPreferences(NOME_PREFERENCES/*Nome do arquivo*/,0/*Modo de execulção*/);
+        SharedPreferences.Editor listaVip = sharedPreferences.edit();/*Aplicação da edição*/
 
         controller = new PessoaController();
 
@@ -104,6 +111,13 @@ public class MainActivity extends AppCompatActivity {
                             "Foi criado com sucesso o usuario: \n\" " + NovaPessoa.getPrimeiroNome() + " " + NovaPessoa.getSobreNome() + " \" ",
                             Toast.LENGTH_LONG
                     ).show();
+
+                    listaVip.putString/*Envia*/("PrimeiroNome",NovaPessoa.getPrimeiroNome());
+                    listaVip.putString/*Envia*/("sobreNome",NovaPessoa.getSobreNome());
+                    listaVip.putString/*Envia*/("nomeCurso",NovaPessoa.getCursoDesejado());
+                    listaVip.putString/*Envia*/("telefoneContato",NovaPessoa.getTelefoneContato());
+
+                    listaVip.apply();/*Salvamento*/
 
                     controller.salvar(NovaPessoa);
             }
