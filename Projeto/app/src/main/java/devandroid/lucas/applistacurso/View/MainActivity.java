@@ -11,8 +11,11 @@ import android.widget.Toast;
 
 import devandroid.lucas.applistacurso.Model.Pessoa;
 import devandroid.lucas.applistacurso.R;
+import devandroid.lucas.applistacurso.controller.PessoaController;
 
 public class MainActivity extends AppCompatActivity {
+
+    PessoaController controller;
 
 //    Pessoa pessoa;
 //    Pessoa outraPessoa;
@@ -35,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        controller = new PessoaController();
+
+        controller.toString();
 
         Pessoa pessoa = new Pessoa(
                 "Nathan",
@@ -97,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
                             "Foi criado com sucesso o usuario: \n\" " + NovaPessoa.getPrimeiroNome() + " " + NovaPessoa.getSobreNome() + " \" ",
                             Toast.LENGTH_LONG
                     ).show();
+
+                    controller.salvar(NovaPessoa);
             }
         });
 
