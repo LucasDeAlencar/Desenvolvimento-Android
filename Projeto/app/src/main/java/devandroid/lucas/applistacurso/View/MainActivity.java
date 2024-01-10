@@ -17,6 +17,7 @@ import devandroid.lucas.applistacurso.controller.PessoaController;
 public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;/*Salvara um determinado na forma de pares de valores-chave semelhantes a um Mapa*/
+    SharedPreferences.Editor listaVip;
     public static final String NOME_PREFERENCES = "pref_listavip";
 
     PessoaController controller;
@@ -46,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         pessoa = new Pessoa();
 
         sharedPreferences = getSharedPreferences(NOME_PREFERENCES/*Nome do arquivo*/,0/*Modo de execulção*/);
-        SharedPreferences.Editor listaVip = sharedPreferences.edit();/*Aplicação da edição*/
+        /* Da a permição da variavel "listaVip" alterar o que está contido no "sharedPreferences" */
+        listaVip = sharedPreferences.edit();/*Aplicação da edição*/
 
         controller = new PessoaController();
 
@@ -86,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
                 editSobreNome.setText(null);
                 editNomeCurso.setText(null);
                 editTelefoneContato.setText(null);
+
+                listaVip.clear();/* Limpa os valores associados no "sharedPreferences" */
+                listaVip.apply();/* Aplica as aplicações associadas a "listaVip"*/
 
             }
         });
