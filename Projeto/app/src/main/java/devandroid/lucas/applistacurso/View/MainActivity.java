@@ -16,9 +16,6 @@ import devandroid.lucas.applistacurso.controller.PessoaController;
 
 public class MainActivity extends AppCompatActivity {
 
-    SharedPreferences sharedPreferences;/*Salvara um determinado na forma de pares de valores-chave semelhantes a um Mapa*/
-    SharedPreferences.Editor listaVip;
-    public static final String NOME_PREFERENCES = "pref_listavip";
 
     PessoaController controller;
 
@@ -46,23 +43,11 @@ public class MainActivity extends AppCompatActivity {
 
         pessoa = new Pessoa();
 
-        sharedPreferences = getSharedPreferences(NOME_PREFERENCES/*Nome do arquivo*/,0/*Modo de execulção*/);
-        /* Da a permição da variavel "listaVip" alterar o que está contido no "sharedPreferences" */
-        listaVip = sharedPreferences.edit();/*Aplicação da edição*/
-
-        controller = new PessoaController();
+        controller = new PessoaController(MainActivity.this);
 
         /* Redefinição para a variavel "pessoa" usando o que está contido em "sharedPreferences"*/
-        pessoa.setPrimeiroNome(sharedPreferences.getString("PrimeiroNome"/* A variavel */,null/* caso contrario retorna null */)/* Verifica se no sharedPreferences possui a variavel "PrimeiroNome" e retorna o valor da variavel caso não tenha retornara "NULL" */);
-        pessoa.setSobreNome(sharedPreferences.getString("sobreNome"/* A variavel */,null/* caso contrario retorna null */)/* Verifica se no sharedPreferences possui a variavel "PrimeiroNome" e retorna o valor da variavel caso não tenha retornara "NULL" */);
-        pessoa.setCursoDesejado(sharedPreferences.getString("nomeCurso"/* A variavel */,null/* caso contrario retorna null */)/* Verifica se no sharedPreferences possui a variavel "PrimeiroNome" e retorna o valor da variavel caso não tenha retornara "NULL" */);
-        pessoa.setTelefoneContato(sharedPreferences.getString("telefoneContato"/* A variavel */,null/* caso contrario retorna null */)/* Verifica se no sharedPreferences possui a variavel "PrimeiroNome" e retorna o valor da variavel caso não tenha retornara "NULL" */);
+        controller.buscar(pessoa);
 
-//        Pessoa pessoa = new Pessoa(
-//                "Nathan",
-//                "Souza",
-//                "Android",
-//                "25 98795-9765");
 
         /*Associação ao XML pro JAVA*/
         editPrimeiroNome = findViewById(R.id.editPrimeiroNome);
@@ -89,8 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 editNomeCurso.setText(null);
                 editTelefoneContato.setText(null);
 
-                listaVip.clear();/* Limpa os valores associados no "sharedPreferences" */
-                listaVip.apply();/* Aplica as aplicações associadas a "listaVip"*/
+                controller.limpar();
 
             }
         });
@@ -122,13 +106,6 @@ public class MainActivity extends AppCompatActivity {
                             "Foi criado com sucesso o usuario: \n\" " + NovaPessoa.getPrimeiroNome() + " " + NovaPessoa.getSobreNome() + " \" ",
                             Toast.LENGTH_LONG
                     ).show();
-
-                    listaVip.putString/*Envia*/("PrimeiroNome"/* A variavel*/,NovaPessoa.getPrimeiroNome()/*O que ira adicionar*/);
-                    listaVip.putString/*Envia*/("sobreNome",NovaPessoa.getSobreNome());
-                    listaVip.putString/*Envia*/("nomeCurso",NovaPessoa.getCursoDesejado());
-                    listaVip.putString/*Envia*/("telefoneContato",NovaPessoa.getTelefoneContato());
-
-                    listaVip.apply();/*Salvamento*/
 
                     controller.salvar(NovaPessoa);
             }
