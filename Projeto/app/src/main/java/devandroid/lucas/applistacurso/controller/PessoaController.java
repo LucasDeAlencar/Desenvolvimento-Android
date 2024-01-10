@@ -58,6 +58,6 @@ public class PessoaController {
         listaVip.apply();/* Aplica as aplicações associadas a "listaVip"*/
 
     }
-    
+
 
 }
